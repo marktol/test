@@ -1,9 +1,3 @@
-name: Playwright Tests
-on:
-  push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
 jobs:
   test:
     timeout-minutes: 60
@@ -17,6 +11,10 @@ jobs:
         run: npm ci --force
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps --force
+      - name: Start the server
+        run: npm run start & # Запускаем сервер в фоновом режиме
+      - name: Wait for the server to be ready
+        run: npx wait-on http://localhost:3000 # Подождите, пока сервер будет доступен
       - name: Run Playwright tests
         run: npm run pageObjCh
       - uses: actions/upload-artifact@v4
