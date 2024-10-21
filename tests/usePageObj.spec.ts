@@ -40,3 +40,9 @@ test("params meth", async ({ page }) => {
   await pm.onDatePickerPage().selectCommonDatePickerDateFromToday(5);
   await pm.onDatePickerPage().selectDatePickerWithRange(3, 5);
 });
+
+test.only("testing with arfos ci", async ({ page }) => {
+  const pm = new PageManager(page);
+  await pm.navigateTo().formLayoitsPage();
+  await pm.navigateTo().datepickerPage();
+});
