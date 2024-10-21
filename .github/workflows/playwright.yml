@@ -18,8 +18,20 @@ jobs:
         run: npm ci --force
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps --force
+
+      # Шаг для запуска вашего веб-сервера
+      - name: Start the server
+        run: npm run start &
+
+      # Шаг для ожидания, пока сервер станет доступен
+      - name: Wait for the server to be ready
+        run: npx wait-on http://localhost:4200 # Убедитесь, что порт соответствует вашему приложению
+
+      # Запуск тестов Playwright
       - name: Run Playwright tests
         run: npm run pageObjCh
+
+      # Загрузка отчётов тестирования
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
